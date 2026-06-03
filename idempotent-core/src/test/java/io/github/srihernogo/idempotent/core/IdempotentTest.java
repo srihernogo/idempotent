@@ -22,15 +22,15 @@ public class IdempotentTest {
     public void validateAssetResponse(
             MockMvc mockMvc, int counter, String type, MockHttpServletRequestBuilder requestBuilder) throws Exception {
         String assetJson = """
-                 {
-                     "id": 1,
-                     "type": {
-                         "category": "%s API",
-                         "version" : "1"
-                      },
-                     "name": "Asset API-1"
-                 }
-                """.formatted(type);
+                                 {
+                                     "id": 1,
+                                     "type": {
+                                         "category": "%s API",
+                                         "version" : "1"
+                                      },
+                                     "name": "Asset API-1"
+                                 }
+                                """.formatted(type);
 
         // First request - should process and cache the response
         ResultActions resultActions = mockMvc.perform(
@@ -43,7 +43,7 @@ public class IdempotentTest {
         // Expected response should match the first request
         // language=json
         String expectedResponseJson = """
-                {"id":"1","type":{"category":"%s API","version":"1"},"name":"Asset API-1","url":"https://github.com/srihernogo/%s/idempotent"}""".formatted(type, type.toLowerCase(Locale.ROOT));
+                                {"id":"1","type":{"category":"%s API","version":"1"},"name":"Asset API-1","url":"https://github.com/srihernogo/%s/idempotent"}""".formatted(type, type.toLowerCase(Locale.ROOT));
 
         // Verify first response is as expected
         Assertions.assertEquals(expectedResponseJson, responseBody);

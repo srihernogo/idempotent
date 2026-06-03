@@ -44,15 +44,15 @@ class IdempotentControllerWaitTest {
         var executor = Executors.newFixedThreadPool(2);
         // language=json
         var content = """
-                {
-                     "id": 1111,
-                     "type": {
-                         "category": "error test API",
-                         "version" : "1"
-                      },
-                     "name": "Asset API-1"
-                 }
-                """;
+                                {
+                                     "id": 1111,
+                                     "type": {
+                                         "category": "error test API",
+                                         "version" : "1"
+                                      },
+                                     "name": "Asset API-1"
+                                 }
+                                """;
 
         var firstFuture = executor.submit(() -> mockMvc.perform(put("/in-memory/assets-error-heavy")
                         .contentType(MediaType.APPLICATION_JSON)

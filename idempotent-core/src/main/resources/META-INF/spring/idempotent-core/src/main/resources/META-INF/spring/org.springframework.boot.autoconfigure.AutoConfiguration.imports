@@ -1,0 +1,2 @@
+io.github.srihernogo.idempotent.core.serialization.IdempotentJsonMapperAutoConfiguration
+io.github.srihernogo.idempotent.core.IdempotentCoreAutoConfiguration

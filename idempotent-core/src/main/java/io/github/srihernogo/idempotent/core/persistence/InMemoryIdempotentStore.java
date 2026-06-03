@@ -1,0 +1,50 @@
+package io.github.srihernogo.idempotent.core.persistence;
+
+import io.github.srihernogo.idempotent.core.exception.IdempotentKeyConflictException;
+import org.jspecify.annotations.Nullable;
+
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * In memory idempotent store.
+ */
+public class InMemoryIdempotentStore implements IdempotentStore {
+
+    private final ConcurrentHashMap<IdempotentKey, Value> map;
+
+    /**
+     * Instantiates a new In memory idempotent store.
+     */
+    public InMemoryIdempotentStore() {
+        map = new ConcurrentHashMap<>();
+    }
+
+    @Override
+    public @Nullable Value loadValue(IdempotentKey idempotentKey, Class<?> returnType) {
+        return map.get(idempotentKey);
+    }
+
+    @Override
+    public void store(IdempotentKey idempotentKey, Value value) {
+        if (map.putIfAbsent(idempotentKey, value) != null) {
+            throw new IdempotentKeyConflictException("Idempotent key already exists in Memory", idempotentKey);
+        }
+    }
+
+    @Override
+    public void remove(IdempotentKey idempotentKey) {
+        map.remove(idempotentKey);
+    }
+
+    @Override
+    public void update(IdempotentKey idempotentKey, Value value) {
+        map.replace(idempotentKey, value);
+    }
+
+    /**
+     * Clear all stored values (for testing purposes).
+     */
+    public void clear() {
+        map.clear();
+    }
+}

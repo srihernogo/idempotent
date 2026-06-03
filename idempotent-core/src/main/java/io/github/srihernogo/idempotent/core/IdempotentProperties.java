@@ -12,7 +12,7 @@ import java.time.Duration;
  * application.yml.
  * <p>
  * Example:
- * 
+ *
  * <pre>
  * idempotent.key.header=X-Idempotency-Key
  * idempotent.inprogress.max.retries=5
@@ -22,7 +22,8 @@ import java.time.Duration;
  */
 @ConfigurationProperties(prefix = "idempotent")
 public record IdempotentProperties(
-        @Name("key.header") @DefaultValue("X-Idempotency-Key") String keyHeader,
+        @Name("key.header") @DefaultValue("X-Idempotency-Key")
+        String keyHeader,
 
         @DefaultValue InProgress inprogress) {
 
@@ -33,8 +34,8 @@ public record IdempotentProperties(
     public record InProgress(
             @Name("max.retries") @DefaultValue("5") int maxRetries,
 
-            @Name("retry.initial.interval") @DefaultValue("PT0.1S") Duration retryInitialInterval,
+            @Name("retry.initial.interval") @DefaultValue("PT0.1S")
+            Duration retryInitialInterval,
 
-            @Name("retry.multiplier") @DefaultValue("2") int retryMultiplier) {
-    }
+            @Name("retry.multiplier") @DefaultValue("2") int retryMultiplier) {}
 }
